@@ -1,4 +1,6 @@
-$colors: var(--colors_list);
+
+
+// $colors: #{var(--colors_list)};
 
 ul{
     li{
@@ -19,16 +21,14 @@ ul{
 }
 
 // @each $colorItem in $colors {
-//     [data-color=#{$colorItem}] {
-//         background-color: #{$colorItem};
-//     }
+   
+//      [data-color="#{$colorItem}"] {
+//          background-color: #{$colorItem};
+//          width: 20px;
+//          height: 20px;
+//      }
 // }
-[data-colo] {
-    background-color: var(#{--colors_list});
-    content: "dsds";
-    width: 20px;
-    height: 20px;
-}
+
 [data-storage] {
     color: blue;
 }

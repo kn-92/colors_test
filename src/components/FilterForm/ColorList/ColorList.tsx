@@ -14,10 +14,6 @@ interface Props {
 }
 
 const ColorList = (props: Props) => {
-  const jsAsCSS = (name: string, value: string) => {
-    document.documentElement.style.setProperty(name, value);
-  };
-
   const [storedColorsArray, setStoredColorsArray] = useState<string[]>();
   const state = useContext(context);
 
@@ -38,50 +34,8 @@ const ColorList = (props: Props) => {
 
   useEffect(() => {
     let colors = [...JSON.parse(storedColors as string)];
-    let arr: string[] = [];
 
-    // const sortColors = () => {};
-    // sortColors();
     const filterColors = () => {
-      const hexToRGB = (hex: string, alpha: string) => {
-        const r = parseInt(hex.slice(1, 3), 16);
-        const g = parseInt(hex.slice(3, 5), 16);
-        const b = parseInt(hex.slice(5, 7), 16);
-        console.log(r, g, b);
-        if (alpha) {
-          return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-        }
-
-        return `rgb(${r}, ${g}, ${b})`;
-      };
-
-      // const hexToRGBRed = (hex: string, alpha?: string) => {
-      //   r = parseInt(hex.slice(1, 3), 16);
-
-      //   console.log(r);
-      //   if (alpha) {
-      //     return null;
-      //   }
-
-      //   return r;
-      // };
-
-      for (const i of colors) {
-        const el = hexToRGB(i, "1");
-        arr.push(el);
-      }
-      console.log(arr);
-      console.log(colors);
-      // if (red && green) {
-      //   const filteredArr = storedColorsArray?.filter(
-      //     (el) =>
-      //       parseInt(el.slice(1, 3), 16) > 127 &&
-      //       parseInt(el.slice(3, 5), 16) > 127
-      //   );
-      //   setStoredColorsArray(filteredArr);
-      //   console.log(filteredArr);
-      // }
-
       if (red) {
         const filteredArr = colors?.filter(
           (el) => parseInt(el.slice(1, 3), 16) > 127
@@ -94,26 +48,19 @@ const ColorList = (props: Props) => {
               parseInt(el.slice(3, 5), 16) > 127
           );
           setStoredColorsArray(filteredArr);
-          console.log(filteredArr, " z red and green");
         }
-        console.log(filteredArr);
       }
       if (green) {
         const filteredArr = colors?.filter(
           (el) => parseInt(el.slice(3, 5), 16) > 127
         );
         setStoredColorsArray(filteredArr);
-        // console.log(r);
-        console.log(filteredArr);
-        // return;
       }
       if (blue) {
         const filteredArr = colors?.filter(
           (el) => parseInt(el.slice(5, 7), 16) > 127
         );
         setStoredColorsArray(filteredArr);
-        console.log(filteredArr);
-        // return;
       }
     };
 
@@ -124,7 +71,7 @@ const ColorList = (props: Props) => {
   }, [state, storedColors, red, green, blue]);
   document.documentElement.style.setProperty(
     "--colors_list",
-    JSON.stringify("#112686")
+    storedColorsArray?.toString().replaceAll(",", " ") as string
   );
   return (
     <ul>
@@ -163,12 +110,12 @@ const ColorList = (props: Props) => {
           <li key={color + index}>
             <div>
               <div
-                data-colo={color}
-                // style={{
-                //   backgroundColor: color,
-                //   width: "20px",
-                //   height: "20px",
-                // }}
+                data-color={color}
+                style={{
+                  backgroundColor: color,
+                  width: "20px",
+                  height: "20px",
+                }}
               ></div>
               <div data-storage>
                 <span onClick={() => handleClick(color)}>x</span>
