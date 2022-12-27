@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.scss";
 
-function App() {
+import { context } from "./Contexts/state";
+
+import AddColorForm from "./components/AddColorForm/AddColorForm";
+import FilterForm from "./components/FilterForm/FilterForm";
+
+const App = () => {
+  const [state, setState] = useState<boolean>(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <context.Provider value={state}>
+        <AddColorForm state={state} setContextStateValue={setState} />
+        <FilterForm />
+      </context.Provider>
+    </>
   );
-}
+};
 
 export default App;
